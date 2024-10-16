@@ -1,16 +1,22 @@
 <script>
-  let freeHours = 1;
-  let profile = {
-      name: 'Marcus Barreto',
-      avatar: 'https://github.com/mvbarreto1.png'
-  };
-
-  let statusCount = {
-      total: 2,
-      progress: 1,
-      done: 1,
-  };
-</script>
+    import { Calculate } from "../scripts/calculate";
+    import { Project } from "../scripts/project";
+    import { app } from "../store";
+  
+    $: freeHours = new Calculate($app).freeHours;
+  
+    $: statusCount = new Calculate($app).projectsStatus;
+  
+    function goToProfile() {
+      $app.page = "profile";
+    }
+  
+    function goToProject() {
+      $app.currentProject = new Project();
+      $app.projects = [...$app.projects, $app.currentProject];
+      $app.page = "project";
+    }
+  </script>
 
 <header class="page-header bg-gray-700 text-white p-4 pb-8">
   <div class="max-w-4xl mx-auto">
